@@ -37,6 +37,43 @@ GROUP BY ct.city_name
 ORDER BY 2 DESC;
 
 
+-- 3. Sales Count for each product
+-- How many units of each coffee product have been sold ?
+
+SELECT p.product_id,p.product_name,
+	   COUNT(s.sale_id) as total_orders
+FROM products as p
+LEFT JOIN
+sales as s
+ON s.product_id = p.product_id
+GROUP BY p.product_id
+ORDER BY total_orders DESC;
+
+
+-- 4. Average Sales Amount per City
+-- What is the average sales amount per customer in each city ?
+SELECT ct.city_name as city_name ,
+		SUM(s.total) as total_revenue,
+        COUNT(DISTINCT c.customer_id) as total_cutomer,
+        ROUND(SUM(s.total) / COUNT(DISTINCT c.customer_id) ,2) as avg_sale_customer_city
+FROM sales s
+JOIN customers c
+ON s.customer_id = c.customer_id
+JOIN city ct
+ON c.city_id = ct.city_id
+GROUP BY city_name
+ORDER BY total_revenue DESC;
+
+
+-- 5. Top Selling Products by City
+-- What are the top 3 selling products in each city based on sales volume ?
+
+
+
+
+
+
+
 
 
 
